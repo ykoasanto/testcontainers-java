@@ -14,7 +14,8 @@ subprojects {
     apply plugin: 'io.franzbecker.gradle-lombok'
     apply plugin: 'com.github.johnrengelman.shadow'
 
-    group = "org.testcontainers"
+    group = "com.tracelink"
+    version = "1.14.3"
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -22,6 +23,7 @@ subprojects {
     compileTestJava.options.encoding = 'UTF-8'
 
     repositories {
+        mavenLocal()
         jcenter()
         mavenCentral()
     }
@@ -78,7 +80,7 @@ subprojects {
     }
 
     // Ensure that Javadoc generation is always tested
-    check.dependsOn(javadoc)
+//    check.dependsOn(javadoc)
 
     def postCheckCommand = properties["postCheckCommand"]
     if (postCheckCommand) {
@@ -91,10 +93,10 @@ subprojects {
         })
     }
 
-    javadoc {
-        dependsOn delombok
-        source = delombok.outputs
-    }
+//    javadoc {
+//        dependsOn delombok
+//        source = delombok.outputs
+//    }
 
     shadowJar {
         configurations = []
@@ -135,4 +137,6 @@ subprojects {
     dependencies {
         testCompile 'ch.qos.logback:logback-classic:1.2.3'
     }
+    tasks.withType(Javadoc).all { enabled = false }
+
 }
